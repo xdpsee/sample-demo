@@ -15,6 +15,7 @@
  */
 package sample.demo.netty.core.event;
 
+import sample.demo.netty.core.handler.AbstractEventHandler;
 import sample.demo.netty.data.domain.Event;
 import sample.demo.netty.data.domain.EventType;
 import sample.demo.netty.data.domain.Position;

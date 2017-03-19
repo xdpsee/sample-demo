@@ -1,4 +1,4 @@
-package sample.demo.netty.core;
+package sample.demo.netty.core.decoder;
 
 
 import io.netty.buffer.ByteBuf;

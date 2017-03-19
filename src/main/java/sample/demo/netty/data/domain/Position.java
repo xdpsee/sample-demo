@@ -176,4 +176,8 @@ public class Position extends ExtensibleObject implements Message {
         setFixTime(time);
     }
 
+    @Override
+    public byte[] toBytes() {
+        return new byte[0];
+    }
 }

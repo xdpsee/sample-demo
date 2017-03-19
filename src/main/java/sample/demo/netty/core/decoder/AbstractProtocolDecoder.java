@@ -1,10 +1,11 @@
-package sample.demo.netty.core;
+package sample.demo.netty.core.decoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
+import sample.demo.netty.core.Configs;
 import sample.demo.netty.data.domain.Position;
 
 import javax.xml.bind.DatatypeConverter;

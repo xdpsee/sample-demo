@@ -1,4 +1,4 @@
-package sample.demo.netty.core;
+package sample.demo.netty.core.handler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import sample.demo.netty.data.domain.Position;

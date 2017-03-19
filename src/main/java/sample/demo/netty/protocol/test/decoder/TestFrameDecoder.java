@@ -1,4 +1,4 @@
-package sample.demo.netty.protocol.test;
+package sample.demo.netty.protocol.test.decoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

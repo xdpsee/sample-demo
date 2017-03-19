@@ -3,12 +3,11 @@ package sample.demo.netty.data.domain;
 import lombok.Getter;
 import lombok.Setter;
 import sample.demo.netty.core.ExtensibleObject;
-import sample.demo.netty.core.Message;
 
 import java.util.Date;
 
 @SuppressWarnings("unused")
-public class Event extends ExtensibleObject implements Message {
+public class Event extends ExtensibleObject {
 
     @Getter @Setter
     private Long id;
@@ -37,4 +36,5 @@ public class Event extends ExtensibleObject implements Message {
     public Event() {
 
     }
+
 }

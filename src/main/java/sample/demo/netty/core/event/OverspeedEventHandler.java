@@ -18,6 +18,7 @@ package sample.demo.netty.core.event;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import sample.demo.netty.core.Configs;
+import sample.demo.netty.core.handler.AbstractEventHandler;
 import sample.demo.netty.data.domain.Device;
 import sample.demo.netty.data.domain.Event;
 import sample.demo.netty.data.domain.EventType;

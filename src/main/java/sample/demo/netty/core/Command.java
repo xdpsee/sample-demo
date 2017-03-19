@@ -4,7 +4,7 @@ import lombok.Data;
 
 @SuppressWarnings("unused")
 @Data
-public class Command extends ExtensibleObject implements Message {
+public class Command extends ExtensibleObject {
 
     private CommandType type;
 
@@ -22,3 +22,5 @@ public class Command extends ExtensibleObject implements Message {
     public static final String KEY_PHONE = "phone";
 
 }
+
+

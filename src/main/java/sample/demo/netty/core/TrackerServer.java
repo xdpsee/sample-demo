@@ -48,7 +48,7 @@ public abstract class TrackerServer {
         }
     }
 
-    public abstract void addCustomHandlers(ChannelPipeline pipeline);
+    public abstract void initPipeline(ChannelPipeline pipeline);
 
     void start() {
         InetSocketAddress endpoint;
@@ -58,7 +58,8 @@ public abstract class TrackerServer {
             endpoint = new InetSocketAddress(address, port);
         }
 
-        bootstrap.bind(endpoint).addListener((ChannelFutureListener) future -> {
+        bootstrap.bind(endpoint)
+                .addListener((ChannelFutureListener) future -> {
             if (future.isSuccess()) {
                 channelGroup.add(future.channel());
             }
