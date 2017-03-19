@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sample.demo.netty.data.service.impl.mybtatis.mapper.ModelMapper">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache">
+        <property name="timeToIdleSeconds" value="3600"/><!--1 hour-->
+        <property name="timeToLiveSeconds" value="3600"/><!--1 hour-->
+        <property name="maxEntriesLocalHeap" value="1000"/>
+        <property name="maxEntriesLocalDisk" value="10000000"/>
+        <property name="memoryStoreEvictionPolicy" value="LRU"/>
+    </cache>
+
+    <resultMap type="Model" id="modelResultMap">
+        <result property="id" javaType="Long" column="id" jdbcType="BIGINT"/>
+        <result property="gmtCreate" javaType="java.util.Date" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" javaType="java.util.Date" column="gmt_modified" jdbcType="TIMESTAMP"/>
+        <result property="protocol" javaType="String" column="protocol" jdbcType="VARCHAR"/>
+        <result property="model" javaType="String" column="model" jdbcType="VARCHAR"/>
+        <result property="supportedCommands" javaType="List" column="supported_commands" jdbcType="VARCHAR"
+                typeHandler="sample.demo.netty.data.service.impl.mybtatis.type.CommandTypeListTypeHandler"/>
+        <result property="extras" javaType="Map" column="extras" jdbcType="OTHER"
+                typeHandler="sample.demo.netty.data.service.impl.mybtatis.type.MapTypeHandler"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="Model" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO models (
+        gmt_create,
+        gmt_modified,
+        protocol,
+        model,
+        supported_commands,
+        extras
+        ) VALUES (
+        now(),
+        now(),
+        #{protocol},
+        #{model},
+        #{supportedCommands},
+        to_json(#{extras}::json)
+        ) ON CONFLICT(protocol,model)
+        DO UPDATE SET supported_commands=#{supportedCommands}, gmt_modified = now()
+    </insert>
+
+    <select id="select" resultMap="modelResultMap">
+        SELECT * FROM models WHERE protocol = #{protocol} AND model = #{model}
+    </select>
+
+    <select id="selectAll" resultMap="modelResultMap">
+        SELECT * FROM models WHERE protocol = #{protocol}
+    </select>
+
+</mapper>

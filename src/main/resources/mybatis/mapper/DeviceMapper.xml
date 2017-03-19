@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sample.demo.netty.data.service.impl.mybtatis.mapper.DeviceMapper">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache">
+        <property name="timeToIdleSeconds" value="3600"/><!--1 hour-->
+        <property name="timeToLiveSeconds" value="3600"/><!--1 hour-->
+        <property name="maxEntriesLocalHeap" value="1000"/>
+        <property name="maxEntriesLocalDisk" value="10000000"/>
+        <property name="memoryStoreEvictionPolicy" value="LRU"/>
+    </cache>
+
+    <resultMap type="Device" id="deviceResultMap">
+        <result property="id" javaType="Long" column="id" jdbcType="BIGINT"/>
+        <result property="gmtCreate" javaType="java.util.Date" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" javaType="java.util.Date" column="gmt_modified" jdbcType="TIMESTAMP"/>
+        <result property="uniqueId" javaType="String" column="unique_id" jdbcType="VARCHAR"/>
+        <result property="category" javaType="Category" column="category" jdbcType="INTEGER"
+                typeHandler="sample.demo.netty.data.service.impl.mybtatis.type.CategoryTypeHandler"/>
+        <result property="protocol" javaType="String" column="protocol" jdbcType="VARCHAR"/>
+        <result property="model" javaType="String" column="model" jdbcType="VARCHAR"/>
+        <result property="name" javaType="String" column="name" jdbcType="VARCHAR"/>
+        <result property="phone" javaType="String" column="phone" jdbcType="VARCHAR"/>
+        <result property="contacts" javaType="String" column="contacts" jdbcType="VARCHAR"/>
+        <result property="extras" javaType="Map" column="extras" jdbcType="OTHER"
+                typeHandler="sample.demo.netty.data.service.impl.mybtatis.type.MapTypeHandler"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="Device" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO devices (
+          gmt_create,
+          gmt_modified,
+          unique_id,
+          category,
+          protocol,
+          model,
+          name,
+          phone,
+          contacts,
+          extras
+        ) VALUES (
+          now(),
+          now(),
+          #{uniqueId},
+          #{category},
+          #{protocol},
+          #{model},
+          #{name},
+          #{phone},
+          #{contacts},
+          to_json(#{extras}::json)
+        )
+    </insert>
+
+    <select id="selectById" resultMap="deviceResultMap">
+        SELECT * FROM devices WHERE id = #{id}
+    </select>
+
+    <select id="selectByUnique" resultMap="deviceResultMap">
+        SELECT * FROM devices WHERE unique_id = #{uniqueId}
+    </select>
+
+</mapper>
