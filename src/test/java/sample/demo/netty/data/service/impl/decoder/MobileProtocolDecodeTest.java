@@ -10,10 +10,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
-public class TestProtocolDecoderTest {
+public class MobileProtocolDecodeTest {
 
     @Test
-    public void testLoginDecoder() {
+    public void testRegistryDecode() {
 
         /**
          * ##1,{protocol_version},{uuid},{app_version},{gmt_time}#

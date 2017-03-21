@@ -1,4 +1,4 @@
-package sample.demo.netty.protocol.test.message;
+package sample.demo.netty.protocol.mobile.message;
 
 
 import lombok.Data;
@@ -8,7 +8,7 @@ import sample.demo.netty.core.Message;
 
 @Data
 @RequiredArgsConstructor
-public class LoginMessage implements Message {
+public class RegistryMessage implements Message {
     @NonNull
     private double protocolVersion;
     @NonNull

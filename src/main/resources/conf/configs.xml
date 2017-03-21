@@ -499,6 +499,6 @@
     <entry key='tmg.port'>5132</entry>
     <entry key='pretrace.port'>5133</entry>
     <entry key='pricol.port'>5134</entry>
-    <entry key='test.port'>8806</entry>
+    <entry key='mobile.port'>8806</entry>
 
 </properties>

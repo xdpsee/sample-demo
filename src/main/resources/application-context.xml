@@ -14,5 +14,5 @@
 
     <import resource="datasource-context.xml" />
     <import resource="ehcache-context.xml" />
-
+    <import resource="druid-context.xml" />
 </beans>

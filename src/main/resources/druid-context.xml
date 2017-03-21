@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="server" class="org.eclipse.jetty.server.Server" init-method="start" destroy-method="stop">
+        <property name="connectors">
+            <list>
+                <bean id="connector" class="org.eclipse.jetty.server.ServerConnector">
+                    <constructor-arg ref="server"/>
+                    <property name="port" value="8080"/>
+                </bean>
+            </list>
+        </property>
+
+        <property name="handler">
+            <bean class="org.eclipse.jetty.server.handler.HandlerCollection">
+                <property name="handlers">
+                    <list>
+                        <bean class="org.eclipse.jetty.servlet.ServletContextHandler">
+                            <property name="contextPath" value="/"/>
+                            <property name="sessionHandler">
+                                <bean class="org.eclipse.jetty.server.session.SessionHandler"/>
+                            </property>
+                            <property name="resourceBase" value="/"/>
+                            <property name="servletHandler">
+                                <bean class="org.eclipse.jetty.servlet.ServletHandler">
+                                    <property name="servlets">
+                                        <list>
+                                            <bean class="org.eclipse.jetty.servlet.ServletHolder">
+                                                <property name="name" value="DruidStatView"/>
+                                                <property name="servlet">
+                                                    <bean class="com.alibaba.druid.support.http.StatViewServlet"/>
+                                                </property>
+                                            </bean>
+                                        </list>
+                                    </property>
+                                    <property name="servletMappings">
+                                        <list><!-- servlet mapping -->
+                                            <bean class="org.eclipse.jetty.servlet.ServletMapping">
+                                                <property name="pathSpecs">
+                                                    <list>
+                                                        <value>/druid/*</value>
+                                                    </list>
+                                                </property>
+                                                <property name="servletName" value="DruidStatView"/>
+                                            </bean>
+                                        </list>
+                                    </property>
+                                </bean>
+                            </property>
+                        </bean>
+
+                        <bean class="org.eclipse.jetty.server.handler.RequestLogHandler">
+                            <property name="requestLog">
+                                <bean class="org.eclipse.jetty.server.NCSARequestLog">
+                                    <constructor-arg value="jetty-yyyy_mm_dd.log"/>
+                                    <property name="extended" value="false"/>
+                                </bean>
+                            </property>
+                        </bean>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+</beans>
+

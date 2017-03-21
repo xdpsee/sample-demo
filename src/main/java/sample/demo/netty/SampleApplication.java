@@ -16,7 +16,7 @@ public class SampleApplication {
                 = new ClassPathXmlApplicationContext("application-context.xml");
 
         System.out.println("--------------------------------------->");
-        System.out.println(new Date(context.getStartupDate()).toLocaleString());
+        System.out.println(new Date(context.getStartupDate()));
         System.out.println("Starting ...");
         final ServerManager serverManager = new ServerManager();
         serverManager.startup();

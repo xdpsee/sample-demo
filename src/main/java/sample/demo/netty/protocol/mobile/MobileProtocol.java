@@ -1,20 +1,20 @@
-package sample.demo.netty.protocol.test;
+package sample.demo.netty.protocol.mobile;
 
 import io.netty.channel.ChannelPipeline;
 import sample.demo.netty.core.*;
 import sample.demo.netty.core.handler.DefaultDataHandler;
-import sample.demo.netty.protocol.test.decoder.TestFrameDecoder;
-import sample.demo.netty.protocol.test.decoder.TestProtocolDecoder;
-import sample.demo.netty.protocol.test.handler.LoginMessageHandler;
+import sample.demo.netty.protocol.mobile.decoder.MobileFrameDecoder;
+import sample.demo.netty.protocol.mobile.decoder.MobileProtocolDecoder;
+import sample.demo.netty.protocol.mobile.handler.RegistryMessageHandler;
 import sample.demo.netty.utils.AutowireUtils;
 
 import java.util.Collection;
 
 @SuppressWarnings("unused")
-public class TestProtocol extends AbstractProtocol {
+public class MobileProtocol extends AbstractProtocol {
 
-    public TestProtocol() {
-        super("test");
+    public MobileProtocol() {
+        super("mobile");
     }
 
     @Override
@@ -33,10 +33,10 @@ public class TestProtocol extends AbstractProtocol {
             @Override
             public void initPipeline(ChannelPipeline pipeline) {
 
-                pipeline.addLast("frameDecoder", AutowireUtils.autowire(new TestFrameDecoder()));
-                pipeline.addLast("objectDecoder", AutowireUtils.autowire(new TestProtocolDecoder()));
+                pipeline.addLast("frameDecoder", AutowireUtils.autowire(new MobileFrameDecoder()));
+                pipeline.addLast("objectDecoder", AutowireUtils.autowire(new MobileProtocolDecoder()));
 
-                pipeline.addLast("loginHandler", AutowireUtils.autowire(new LoginMessageHandler()));
+                pipeline.addLast("loginHandler", AutowireUtils.autowire(new RegistryMessageHandler()));
                 pipeline.addLast("dataHandler", AutowireUtils.autowire(new DefaultDataHandler()));
 
             }

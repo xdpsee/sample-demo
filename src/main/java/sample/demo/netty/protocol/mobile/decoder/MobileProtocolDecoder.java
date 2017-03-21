@@ -1,17 +1,17 @@
-package sample.demo.netty.protocol.test.decoder;
+package sample.demo.netty.protocol.mobile.decoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import sample.demo.netty.core.Message;
 import sample.demo.netty.core.decoder.AbstractProtocolDecoder;
-import sample.demo.netty.protocol.test.message.LoginMessage;
+import sample.demo.netty.protocol.mobile.message.RegistryMessage;
 import sample.demo.netty.utils.Parser;
 import sample.demo.netty.utils.PatternBuilder;
 
 import java.net.SocketAddress;
 import java.util.regex.Pattern;
 
-public class TestProtocolDecoder extends AbstractProtocolDecoder {
+public class MobileProtocolDecoder extends AbstractProtocolDecoder {
 
 
     public static final Pattern PATTERN_LOGIN = new PatternBuilder().text("##")
@@ -46,7 +46,8 @@ public class TestProtocolDecoder extends AbstractProtocolDecoder {
         if (message.startsWith("##1")) {
             Parser parser = new Parser(PATTERN_LOGIN, message);
             if (parser.matches()) {
-                return new LoginMessage(parser.nextDouble()
+                parser.nextInt(); // skip cmd
+                return new RegistryMessage(parser.nextDouble()
                         , parser.next()
                         , parser.nextDouble()
                         , parser.next()

@@ -30,7 +30,7 @@ public class DeviceMapperTest extends AbstractTransactionalJUnit4SpringContextTe
 
         Device device = new Device();
         device.setCategory(Category.CAR);
-        device.setProtocol("test");
+        device.setProtocol("mobile");
         device.setModel("TEST-1");
         device.setName("test");
         device.setPhone("13402022080");
@@ -46,7 +46,7 @@ public class DeviceMapperTest extends AbstractTransactionalJUnit4SpringContextTe
     public void testSelectByXXX() {
         Device device = new Device();
         device.setCategory(Category.CAR);
-        device.setProtocol("test");
+        device.setProtocol("mobile");
         device.setModel("TEST-1");
         device.setName("test");
         device.setPhone("13402022080");

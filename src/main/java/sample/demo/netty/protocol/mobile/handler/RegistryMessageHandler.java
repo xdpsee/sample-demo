@@ -1,4 +1,4 @@
-package sample.demo.netty.protocol.test.handler;
+package sample.demo.netty.protocol.mobile.handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,15 +6,15 @@ import sample.demo.netty.core.handler.AbstractHandler;
 import sample.demo.netty.data.domain.Device;
 import sample.demo.netty.data.service.DeviceService;
 import sample.demo.netty.data.service.exception.DeviceNotFoundException;
-import sample.demo.netty.protocol.test.message.LoginMessage;
+import sample.demo.netty.protocol.mobile.message.RegistryMessage;
 
-public class LoginMessageHandler extends AbstractHandler<LoginMessage> {
+public class RegistryMessageHandler extends AbstractHandler<RegistryMessage> {
 
     @Autowired
     private DeviceService deviceService;
 
     @Override
-    protected void messageReceived(ChannelHandlerContext ctx, LoginMessage msg) throws Exception {
+    protected void messageReceived(ChannelHandlerContext ctx, RegistryMessage msg) throws Exception {
 
         Device device = deviceService.getDeviceByUnique(msg.getUniqueId());
         if (null == device) {

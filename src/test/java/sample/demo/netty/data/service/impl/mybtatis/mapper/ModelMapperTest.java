@@ -33,7 +33,7 @@ public class ModelMapperTest extends AbstractTransactionalJUnit4SpringContextTes
         Model model = new Model();
         model.setGmtCreate(new Date());
         model.setGmtModified(new Date());
-        model.setProtocol("test");
+        model.setProtocol("mobile");
         model.setModel("TEST-1");
         model.setSupportedCommands(Arrays.asList(CommandType.TYPE_ALARM_CLOCK));
 
@@ -49,16 +49,16 @@ public class ModelMapperTest extends AbstractTransactionalJUnit4SpringContextTes
         Model model = new Model();
         model.setGmtCreate(new Date());
         model.setGmtModified(new Date());
-        model.setProtocol("test");
+        model.setProtocol("mobile");
         model.setModel("TEST-1");
         model.setSupportedCommands(Arrays.asList(CommandType.TYPE_ALARM_CLOCK));
 
         modelMapper.insert(model);
 
-        model = modelMapper.select("test", "TEST-1");
+        model = modelMapper.select("mobile", "TEST-1");
         assertNotNull(model);
 
-        List<Model> models = modelMapper.selectAll("test");
+        List<Model> models = modelMapper.selectAll("mobile");
         assertEquals(1, models.size());
 
     }

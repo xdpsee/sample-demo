@@ -1,4 +1,4 @@
-package sample.demo.netty.protocol.test.decoder;
+package sample.demo.netty.protocol.mobile.decoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -8,7 +8,7 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 import java.util.Arrays;
 import java.util.List;
 
-public class TestFrameDecoder extends ByteToMessageDecoder {
+public class MobileFrameDecoder extends ByteToMessageDecoder {
 
     private static final byte[] MAGIC_CHUNK= new byte[] {'#', '#'};
 
