@@ -6,6 +6,8 @@ import io.netty.util.concurrent.DefaultEventExecutor;
 import io.netty.util.concurrent.EventExecutor;
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.demo.netty.utils.ClassUtils;
 
 import java.util.Collection;
@@ -13,6 +15,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class ServerManager {
+
+    private static final Logger logger = LoggerFactory.getLogger(ServerManager.class);
 
     private final Map<String, TrackerServer> servers = new LinkedHashMap<>(16);
     @Setter
@@ -43,6 +47,9 @@ public final class ServerManager {
         Collection<Class<?>> classes = ClassUtils.getClasses(packageName);
         for (Class<?> clazz : classes) {
             if (AbstractProtocol.class.isAssignableFrom(clazz)) {
+
+                logger.info(String.format("protocol class : %s found.", clazz.getName()));
+
                 AbstractProtocol protocol = (AbstractProtocol) clazz.newInstance();
                 if (Configs.INSTANCE.hasKey(protocol.name() + ".port")) {
                     protocol.initTrackerServer(this);

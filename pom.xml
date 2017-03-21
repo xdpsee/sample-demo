@@ -16,7 +16,6 @@
     </properties>
 
     <dependencies>
-        <!-- Compile -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -155,6 +154,13 @@
             <version>1.8.10</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.22.0-CR1</version>
+        </dependency>
+
+
         <!-- Test -->
         <dependency>
             <groupId>junit</groupId>
@@ -185,32 +191,72 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>2.0.0</version>
                 <configuration>
-                    <archive>
-                        <manifest>
+                    <assembleDirectory>${project.build.directory}/server</assembleDirectory>
+                    <repositoryName>lib</repositoryName>
+                    <binFolder>bin</binFolder>
+                    <configurationDirectory>conf</configurationDirectory>
+                    <copyConfigurationDirectory>true</copyConfigurationDirectory>
+                    <configurationSourceDirectory>src/main/resources/conf</configurationSourceDirectory>
+                    <repositoryLayout>flat</repositoryLayout>
+                    <encoding>UTF-8</encoding>
+                    <logsDirectory>logs</logsDirectory>
+                    <tempDirectory>tmp</tempDirectory>
+                    <daemons>
+                        <daemon>
+                            <id>server</id>
                             <mainClass>sample.demo.netty.SampleApplication</mainClass>
-                        </manifest>
-                    </archive>
+                            <platforms>
+                                <platform>jsw</platform>
+                            </platforms>
+                            <generatorConfigurations>
+                                <generatorConfiguration>
+                                    <generator>jsw</generator>
+                                    <includes>
+                                        <include>linux-x86-64</include>
+                                        <include>windows-x86-64</include>
+                                        <include>macosx-universal-64</include>
+                                    </includes>
+                                    <configuration>
+                                        <property>
+                                            <name>configuration.directory.in.classpath.first</name>
+                                            <value>conf</value>
+                                        </property>
+                                        <property>
+                                            <name>wrapper.ping.timeout</name>
+                                            <value>120</value>
+                                        </property>
+                                        <property>
+                                            <name>set.default.REPO_DIR</name>
+                                            <value>lib</value>
+                                        </property>
+                                        <property>
+                                            <name>wrapper.logfile</name>
+                                            <value>logs/server.log</value>
+                                        </property>
+                                    </configuration>
+                                </generatorConfiguration>
+                            </generatorConfigurations>
+                            <jvmSettings>
+                                <!-- jvm参数 -->
+                                <extraArguments>
+                                    <extraArgument>-server</extraArgument>
+                                    <extraArgument>-Xmx2G</extraArgument>
+                                    <extraArgument>-Xms1G</extraArgument>
+                                </extraArguments>
+                                <systemProperties>
+                                    <systemProperty>com.sun.management.jmxremote</systemProperty>
+                                    <systemProperty>com.sun.management.jmxremote.port=8079</systemProperty>
+                                    <systemProperty>com.sun.management.jmxremote.authenticate=false</systemProperty>
+                                    <systemProperty>com.sun.management.jmxremote.ssl=false</systemProperty>
+                                </systemProperties>
+                            </jvmSettings>
+                        </daemon>
+                    </daemons>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.jolira</groupId>
-                <artifactId>onejar-maven-plugin</artifactId>
-                <version>1.4.4</version>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <attachToBuild>true</attachToBuild>
-                            <classifier>onejar</classifier>
-                        </configuration>
-                        <goals>
-                            <goal>one-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

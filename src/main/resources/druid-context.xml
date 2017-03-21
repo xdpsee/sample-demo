@@ -77,7 +77,7 @@
                         <bean class="org.eclipse.jetty.server.handler.RequestLogHandler">
                             <property name="requestLog">
                                 <bean class="org.eclipse.jetty.server.NCSARequestLog">
-                                    <constructor-arg value="jetty-yyyy_mm_dd.log"/>
+                                    <constructor-arg value="logs/jetty-yyyy_mm_dd.log"/>
                                     <property name="extended" value="false"/>
                                 </bean>
                             </property>
