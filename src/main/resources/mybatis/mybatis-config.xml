@@ -20,4 +20,25 @@
         <setting name="jdbcTypeForNull" value="OTHER"/>
         <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/>
     </settings>
+
+    <typeAliases>
+        <typeAlias type="sample.demo.netty.data.domain.Device" alias="Device"/>
+        <typeAlias type="sample.demo.netty.data.domain.Category" alias="Category"/>
+        <typeAlias type="sample.demo.netty.data.domain.Model" alias="Model"/>
+        <typeAlias type="sample.demo.netty.data.domain.Event" alias="Event"/>
+        <typeAlias type="sample.demo.netty.data.domain.EventType" alias="EventType"/>
+        <typeAlias type="sample.demo.netty.data.domain.Group" alias="Group"/>
+        <typeAlias type="sample.demo.netty.data.domain.Position" alias="Position"/>
+        <typeAlias type="sample.demo.netty.data.domain.Network" alias="Network"/>
+        <typeAlias type="sample.demo.netty.data.domain.CellTower" alias="CellTower"/>
+        <typeAlias type="sample.demo.netty.data.domain.WifiAccessPoint" alias="WifiAccessPoint"/>
+    </typeAliases>
+    <typeHandlers>
+        <typeHandler handler="sample.demo.netty.data.service.impl.mybtatis.type.CategoryTypeHandler"/>
+        <typeHandler handler="sample.demo.netty.data.service.impl.mybtatis.type.EventTypeHandler"/>
+        <typeHandler handler="sample.demo.netty.data.service.impl.mybtatis.type.MapTypeHandler"/>
+        <typeHandler handler="sample.demo.netty.data.service.impl.mybtatis.type.NetworkTypeHandler"/>
+        <typeHandler handler="sample.demo.netty.data.service.impl.mybtatis.type.CommandTypeListTypeHandler"/>
+    </typeHandlers>
+
 </configuration>

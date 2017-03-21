@@ -33,8 +33,6 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"/>
         <property name="mapperLocations" value="classpath:/mybatis/mapper/*.xml"/>
-        <property name="typeAliasesPackage" value="sample.demo.netty.data.domain"/>
-        <property name="typeHandlersPackage" value="sample.demo.netty.data.service.impl.mybtatis.type"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -50,3 +48,5 @@
 
 
 </beans>
+
+

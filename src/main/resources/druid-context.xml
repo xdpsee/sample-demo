@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <bean id="server" class="org.eclipse.jetty.server.Server" init-method="start" destroy-method="stop">
         <property name="connectors">
@@ -37,7 +37,7 @@
                                         </list>
                                     </property>
                                     <property name="servletMappings">
-                                        <list><!-- servlet mapping -->
+                                        <list>
                                             <bean class="org.eclipse.jetty.servlet.ServletMapping">
                                                 <property name="pathSpecs">
                                                     <list>
@@ -45,6 +45,28 @@
                                                     </list>
                                                 </property>
                                                 <property name="servletName" value="DruidStatView"/>
+                                            </bean>
+                                        </list>
+                                    </property>
+                                    <property name="filters">
+                                        <list>
+                                            <bean class="org.eclipse.jetty.servlet.FilterHolder">
+                                                <property name="name" value="DruidWebStatFilter"/>
+                                                <property name="filter">
+                                                    <bean class="com.alibaba.druid.support.http.WebStatFilter"/>
+                                                </property>
+                                            </bean>
+                                        </list>
+                                    </property>
+                                    <property name="filterMappings">
+                                        <list>
+                                            <bean class="org.eclipse.jetty.servlet.FilterMapping">
+                                                <property name="pathSpecs">
+                                                    <list>
+                                                        <value>/*</value>
+                                                    </list>
+                                                </property>
+                                                <property name="filterName" value="DruidWebStatFilter"/>
                                             </bean>
                                         </list>
                                     </property>
@@ -65,6 +87,23 @@
             </bean>
         </property>
     </bean>
+
+    <bean id="druid-stat-interceptor"
+          class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">
+    </bean>
+
+    <bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"
+          scope="prototype">
+        <property name="patterns">
+            <list>
+                <value>sample.demo.netty.data.service.impl.*</value>
+            </list>
+        </property>
+    </bean>
+
+    <aop:config proxy-target-class="true">
+        <aop:advisor advice-ref="druid-stat-interceptor" pointcut-ref="druid-stat-pointcut" />
+    </aop:config>
 
 </beans>
 

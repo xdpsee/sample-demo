@@ -13,10 +13,14 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 
 public abstract class TrackerServer {
+
+    private static final Logger logger = LoggerFactory.getLogger(TrackerServer.class);
 
     @Getter
     private final String protocol;
@@ -30,6 +34,7 @@ public abstract class TrackerServer {
     private ChannelGroup channelGroup;
 
     private ServerBootstrap bootstrap;
+
 
     public TrackerServer(ServerManager serverManager, String protocol, boolean connectionless) {
         this.protocol = protocol;
@@ -62,6 +67,10 @@ public abstract class TrackerServer {
                 .addListener((ChannelFutureListener) future -> {
             if (future.isSuccess()) {
                 channelGroup.add(future.channel());
+                logger.info(String.format("%s server start at port %d okay.", protocol, port));
+            } else {
+                logger.error(String.format("%s server start at port %d failed.", protocol, port));
+                future.channel().close();
             }
         });
     }
