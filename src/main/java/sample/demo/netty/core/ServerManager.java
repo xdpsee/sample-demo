@@ -44,7 +44,7 @@ public final class ServerManager {
     protected void init() throws Exception {
 
         String packageName = "sample.demo.netty.protocol";
-        Collection<Class<?>> classes = ClassUtils.getClasses(packageName);
+        Collection<Class<?>> classes = ClassUtils.getClasses(packageName, Protocol.class);
         for (Class<?> clazz : classes) {
             if (AbstractProtocol.class.isAssignableFrom(clazz)) {
 

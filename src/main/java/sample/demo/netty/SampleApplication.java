@@ -17,15 +17,14 @@ public class SampleApplication {
 
         System.out.println("--------------------------------------->");
         System.out.println(new Date(context.getStartupDate()));
-        System.out.println("Starting ...");
         final ServerManager serverManager = new ServerManager();
         serverManager.startup();
-        System.out.println("Startup Okay.");
+        System.out.println("startup okay.");
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("Shutdown...");
+            System.out.println("shutdown...");
             serverManager.shutdown();
-            System.out.println("Shutdown Okay.");
+            System.out.println("shutdown okay.");
         }));
 
     }
