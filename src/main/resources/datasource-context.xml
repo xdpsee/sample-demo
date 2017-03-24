@@ -9,9 +9,9 @@
        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <property name="url" value="jdbc:postgresql://localhost/trace-db" />
-        <property name="username" value="zhenhui" />
-        <property name="password" value="" />
+        <property name="url" value="jdbc:mysql://127.0.0.1/trace-db" />
+        <property name="username" value="root" />
+        <property name="password" value="123456" />
         <property name="initialSize" value="5" />
         <property name="minIdle" value="2" />
         <property name="maxActive" value="20" />

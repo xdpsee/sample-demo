@@ -36,9 +36,8 @@
         #{protocol},
         #{model},
         #{supportedCommands},
-        to_json(#{extras}::json)
-        ) ON CONFLICT(protocol,model)
-        DO UPDATE SET supported_commands=#{supportedCommands}, gmt_modified = now()
+        #{extras}
+        ) ON DUPLICATE KEY UPDATE supported_commands=#{supportedCommands}, gmt_modified = now()
     </insert>
 
     <select id="select" resultMap="modelResultMap">

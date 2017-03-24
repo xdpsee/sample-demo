@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS devices (
   category INTEGER NOT NULL DEFAULT 1,
   phone VARCHAR(20) DEFAULT NULL ,
   contacts VARCHAR(256) DEFAULT NULL,
-  extras JSONB NOT NULL
+  extras JSON NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS models (
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS models (
   protocol VARCHAR(32) NOT NULL ,
   model VARCHAR(32) NOT NULL ,
   supported_commands VARCHAR(512) NOT NULL ,
-  extras JSONB NOT NULL
+  extras JSON NOT NULL
 ) ;
 
 CREATE UNIQUE INDEX if NOT EXISTS uk_1

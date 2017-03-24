@@ -48,7 +48,7 @@
           #{name},
           #{phone},
           #{contacts},
-          to_json(#{extras}::json)
+          #{extras}
         )
     </insert>
 
