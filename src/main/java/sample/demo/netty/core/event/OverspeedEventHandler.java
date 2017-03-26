@@ -52,7 +52,7 @@ public class OverspeedEventHandler extends AbstractEventHandler {
             return null;
         }
 
-        if (!positionService.isLatestPosition(position) || !position.isValid()) {
+        if (!positionService.isLatestPosition(position) || !position.isLocated()) {
             return null;
         }
 

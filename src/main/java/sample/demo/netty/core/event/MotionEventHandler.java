@@ -48,7 +48,7 @@ public class MotionEventHandler extends AbstractEventHandler {
         if (null == device) {
             return null;
         }
-        if (!positionService.isLatestPosition(position) || !position.isValid()) {
+        if (!positionService.isLatestPosition(position) || !position.isLocated()) {
             return null;
         }
 

@@ -22,9 +22,8 @@ public class RegistryMessage implements Message {
     private String body;
 
     @Override
-    public byte[] toBytes() {
+    public byte[] rawBytes() {
         return body.getBytes();
     }
-
 
 }

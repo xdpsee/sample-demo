@@ -1,14 +1,15 @@
 package sample.demo.netty.data.domain;
 
+import com.alibaba.druid.util.HexBin;
 import lombok.Getter;
 import lombok.Setter;
-import sample.demo.netty.core.ExtensibleObject;
+import sample.demo.netty.core.Entity;
 import sample.demo.netty.core.Message;
 
 import java.util.Date;
 
 @SuppressWarnings("unused")
-public class Position extends ExtensibleObject implements Message {
+public class Position extends Entity implements Message {
 
     public static final String KEY_ORIGINAL = "raw";
     public static final String KEY_INDEX = "index";
@@ -91,23 +92,24 @@ public class Position extends ExtensibleObject implements Message {
     public static final String PREFIX_IO = "io";
     public static final String PREFIX_COUNT = "count";
 
-
-    @Getter @Setter
-    private Long id;
     @Getter @Setter
     private String protocol;
     @Getter @Setter
     private Long deviceId;
     @Getter @Setter
-    private boolean outdated;
+    private boolean outdated; //过期的,历史数据
     @Getter @Setter
-    private boolean valid;
+    private boolean located;
     @Getter @Setter
     private double latitude;
     @Getter @Setter
     private double longitude;
     @Getter @Setter
     private double altitude;
+    @Getter @Setter
+    private Date deviceTime;
+    @Getter @Setter
+    private Date fixedTime;
     @Getter @Setter
     private double speed; // value in knots
     @Getter @Setter
@@ -117,67 +119,23 @@ public class Position extends ExtensibleObject implements Message {
     @Getter @Setter
     private double accuracy;
     @Getter @Setter
-    private Network network;
-
     private Date serverTime;
-    private Date deviceTime;
-    private Date fixTime;
-
-    public Date getServerTime() {
-        if (serverTime != null) {
-            return new Date(serverTime.getTime());
-        } else {
-            return null;
-        }
-    }
-
-    public void setServerTime(Date serverTime) {
-        if (serverTime != null) {
-            this.serverTime = new Date(serverTime.getTime());
-        } else {
-            this.serverTime = null;
-        }
-    }
-
-    public Date getDeviceTime() {
-        if (deviceTime != null) {
-            return new Date(deviceTime.getTime());
-        } else {
-            return null;
-        }
-    }
-
-    public void setDeviceTime(Date deviceTime) {
-        if (deviceTime != null) {
-            this.deviceTime = new Date(deviceTime.getTime());
-        } else {
-            this.deviceTime = null;
-        }
-    }
-
-    public Date getFixTime() {
-        if (fixTime != null) {
-            return new Date(fixTime.getTime());
-        } else {
-            return null;
-        }
-    }
-
-    public void setFixTime(Date fixTime) {
-        if (fixTime != null) {
-            this.fixTime = new Date(fixTime.getTime());
-        } else {
-            this.fixTime = null;
-        }
-    }
+    @Getter @Setter
+    private Network network;
 
     public void setTime(Date time) {
         setDeviceTime(time);
-        setFixTime(time);
+        setFixedTime(time);
     }
 
     @Override
-    public byte[] toBytes() {
+    public byte[] rawBytes() {
+
+        if (hasKey(KEY_ORIGINAL)) {
+            String hexStr = getString(KEY_ORIGINAL);
+            return HexBin.decode(hexStr);
+        }
+
         return new byte[0];
     }
 }

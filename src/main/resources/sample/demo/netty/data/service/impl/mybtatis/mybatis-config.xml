@@ -32,6 +32,7 @@
         <typeAlias type="sample.demo.netty.data.domain.Network" alias="Network"/>
         <typeAlias type="sample.demo.netty.data.domain.CellTower" alias="CellTower"/>
         <typeAlias type="sample.demo.netty.data.domain.WifiAccessPoint" alias="WifiAccessPoint"/>
+        <typeAlias type="sample.demo.netty.data.domain.support.PositionIndex" alias="PositionIndex"/>
     </typeAliases>
     <typeHandlers>
         <typeHandler handler="sample.demo.netty.data.service.impl.mybtatis.type.CategoryTypeHandler"/>

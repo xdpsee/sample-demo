@@ -12,8 +12,21 @@
     <context:annotation-config />
     <cache:annotation-driven />
 
+    <bean id="propertiesFactoryBean"
+          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:/conf/jdbc.properties</value>
+                <value>classpath:/conf/positions.table.properties</value>
+            </list>
+        </property>
+    </bean>
+    <context:property-placeholder properties-ref="propertiesFactoryBean" ignore-unresolvable="true"/>
+
     <import resource="datasource-context.xml" />
+    <import resource="sharding-jdbc.xml"/>
     <import resource="ehcache-context.xml" />
     <import resource="druid-context.xml" />
+
 </beans>
 
