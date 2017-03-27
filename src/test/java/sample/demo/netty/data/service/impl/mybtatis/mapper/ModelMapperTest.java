@@ -44,7 +44,7 @@ public class ModelMapperTest extends AbstractTransactionalJUnit4SpringContextTes
     }
 
     @Test
-    public void testSelectXXX() {
+    public void testSelect() {
 
         Model model = new Model();
         model.setGmtCreate(new Date());

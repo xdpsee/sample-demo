@@ -3,8 +3,8 @@ package sample.demo.netty.data.service.impl.mybtatis.mapper;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -25,7 +25,7 @@ public class DeviceMapperTest extends AbstractTransactionalJUnit4SpringContextTe
     @Autowired
     private DeviceMapper deviceMapper;
 
-    @Test(expected = DuplicateKeyException.class)
+    @Test(expected = MyBatisSystemException.class)
     public void testInsert() {
 
         Device device = new Device();
@@ -43,7 +43,7 @@ public class DeviceMapperTest extends AbstractTransactionalJUnit4SpringContextTe
     }
 
     @Test
-    public void testSelectByXXX() {
+    public void testSelect() {
         Device device = new Device();
         device.setCategory(Category.CAR);
         device.setProtocol("mobile");
