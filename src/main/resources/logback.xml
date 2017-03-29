@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_HOME" value="${user.home}" />
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <Encoding>UTF-8</Encoding>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+    <appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/logs/mybatis-demo/main.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/logs/mybatis-demo/main.%i.log
+            </fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>5</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>100MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{yyy-MM-dd HH:mm:ss,GMT+8} %p %t - %m%n</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name ="ASYNC_FILE" class= "ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold >0</discardingThreshold>
+        <queueSize>256</queueSize>
+        <appender-ref ref ="FILE"/>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="ASYNC_FILE" />
+    </root>
+
+</configuration>

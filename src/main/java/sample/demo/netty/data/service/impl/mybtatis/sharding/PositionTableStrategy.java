@@ -14,14 +14,13 @@ public class PositionTableStrategy implements MultipleKeysTableShardingAlgorithm
         final List<String> results = new ArrayList<>();
 
         Long deviceId = (Long) getShardingValue(shardingValues, "device_id");
-        Date deviceTime = (Date) getShardingValue(shardingValues, "device_time");
+        Date deviceTime = (Date) getShardingValue(shardingValues, "time");
 
         final String suffix = String.format("_%04d_m%02d", deviceId % 1024, month(deviceTime));
-        availableTargetNames.forEach(targetName -> {
-            if (targetName.endsWith(suffix)) {
-                results.add(targetName);
-            }
-        });
+        String actual = "positions" + suffix;
+        if (availableTargetNames.contains(actual)) {
+            results.add(actual);
+        }
 
         return results;
     }
@@ -35,6 +34,7 @@ public class PositionTableStrategy implements MultipleKeysTableShardingAlgorithm
     }
 
     private int month(Date date) {
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(TimeZone.getTimeZone(ZoneId.of("GMT")));
         calendar.setTime(date);

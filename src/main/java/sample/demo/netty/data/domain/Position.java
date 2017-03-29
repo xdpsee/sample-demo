@@ -47,6 +47,7 @@ public class Position extends Entity implements Message {
     public static final String KEY_ARMED = "armed";
     public static final String KEY_ACCURACY = "accuracy";
     public static final String KEY_GEOFENCE = "geofence";
+    public static final String KEY_ADDRESS = "address";
 
     public static final String KEY_DTCS = "dtcs";
     public static final String KEY_OBD_SPEED = "obd-speed";
@@ -93,8 +94,6 @@ public class Position extends Entity implements Message {
     public static final String PREFIX_COUNT = "count";
 
     @Getter @Setter
-    private String protocol;
-    @Getter @Setter
     private Long deviceId;
     @Getter @Setter
     private boolean outdated; //过期的,历史数据
@@ -107,26 +106,17 @@ public class Position extends Entity implements Message {
     @Getter @Setter
     private double altitude;
     @Getter @Setter
-    private Date deviceTime;
-    @Getter @Setter
-    private Date fixedTime;
+    private Date time;
     @Getter @Setter
     private double speed; // value in knots
     @Getter @Setter
     private double course;
     @Getter @Setter
-    private String address;
-    @Getter @Setter
     private double accuracy;
     @Getter @Setter
-    private Date serverTime;
+    private Date fixedTime;
     @Getter @Setter
     private Network network;
-
-    public void setTime(Date time) {
-        setDeviceTime(time);
-        setFixedTime(time);
-    }
 
     @Override
     public byte[] rawBytes() {

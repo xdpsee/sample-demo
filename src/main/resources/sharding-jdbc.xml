@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:rdb="http://www.dangdang.com/schema/ddframe/rdb" xmlns:bean="http://www.springframework.org/schema/p"
+       xmlns:rdb="http://www.dangdang.com/schema/ddframe/rdb"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 	   http://www.dangdang.com/schema/ddframe/rdb
@@ -52,7 +52,7 @@
                   sharding-columns="device_id"
                   algorithm-class="sample.demo.netty.data.service.impl.mybtatis.sharding.PositionDatabaseStrategy"/>
     <rdb:strategy id="positionTableStrategy"
-                  sharding-columns="device_id,device_time"
+                  sharding-columns="device_id,time"
                   algorithm-class="sample.demo.netty.data.service.impl.mybtatis.sharding.PositionTableStrategy"/>
 
 </beans>
