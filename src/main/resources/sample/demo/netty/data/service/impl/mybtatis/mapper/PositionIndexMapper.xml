@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sample.demo.netty.data.service.impl.mybtatis.mapper.PositionIndexMapper">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache">
+        <property name="timeToIdleSeconds" value="3600"/><!--1 hour-->
+        <property name="timeToLiveSeconds" value="3600"/><!--1 hour-->
+        <property name="maxEntriesLocalHeap" value="1000"/>
+        <property name="maxEntriesLocalDisk" value="10000000"/>
+        <property name="memoryStoreEvictionPolicy" value="LRU"/>
+    </cache>
+
+    <resultMap type="PositionIndex" id="indexResultMap">
+        <result property="deviceId" javaType="Long" column="device_id" jdbcType="BIGINT"/>
+        <result property="time" javaType="java.util.Date" column="time" jdbcType="DATETIME"/>
+        <result property="positionId" javaType="Long" column="position_id" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <insert id="insertIndex" parameterType="PositionIndex">
+        INSERT INTO position_indices (
+        device_id,
+        `time`,
+        position_id
+        ) VALUES (
+        #{deviceId},
+        #{time},
+        #{positionId}
+        )
+    </insert>
+
+    <select id="selectIndex" resultMap="indexResultMap">
+        SELECT * FROM position_indices
+        WHERE device_id = #{deviceId}
+        AND position_id = #{positionId} limit 1
+    </select>
+
+    <select id="countIndices" resultType="int">
+        SELECT count(0) FROM position_indices
+        WHERE device_id = #{deviceId}
+        AND time BETWEEN (#{startDate} AND #{endDate})
+    </select>
+
+    <select id="batchIndices" resultMap="indexResultMap">
+        SELECT * FROM position_indices
+        WHERE device_id = #{deviceId}
+        AND `time` &gt; #{startDate}
+        ORDER BY `time` ASC limit #{limit}
+    </select>
+
+</mapper>
