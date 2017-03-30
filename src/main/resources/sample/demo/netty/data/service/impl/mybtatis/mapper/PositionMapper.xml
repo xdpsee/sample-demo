@@ -42,7 +42,7 @@
         latitude,
         longitude,
         altitude,
-        time,
+        `time`,
         speed,
         course,
         accuracy,
@@ -75,5 +75,20 @@
         AND `time` = #{time}
         AND id = #{positionId} limit 1
     </select>
+
+    <select id="batchSelect" resultMap="positionResultMap">
+        SELECT * FROM positions
+        WHERE device_id = #{deviceId}
+        AND id IN
+        <foreach collection="indices" open="(" close=")" separator="," item="idx">
+            #{idx.positionId}
+        </foreach>
+        AND `time` IN
+        <foreach collection="indices" open="(" close=")" separator="," item="idx">
+            #{idx.time}
+        </foreach>
+    </select>
 </mapper>
+
+
 

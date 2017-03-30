@@ -21,7 +21,5 @@ public class RegistryMessageHandler extends AbstractHandler<RegistryMessage> {
             throw new DeviceNotFoundException(String.format("device:%s not found", msg.getUniqueId()));
         }
 
-
-
     }
 }
