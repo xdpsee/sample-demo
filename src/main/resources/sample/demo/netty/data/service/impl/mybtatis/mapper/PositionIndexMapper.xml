@@ -11,20 +11,19 @@
     </cache>
 
     <resultMap type="PositionIndex" id="indexResultMap">
-        <result property="deviceId" javaType="Long" column="device_id" jdbcType="BIGINT"/>
-        <result property="time" javaType="java.util.Date" column="time" jdbcType="DATETIME"/>
         <result property="positionId" javaType="Long" column="position_id" jdbcType="BIGINT"/>
+        <result property="time" javaType="java.util.Date" column="time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <insert id="insertIndex" parameterType="PositionIndex">
+    <insert id="insertIndex">
         INSERT INTO position_indices (
         device_id,
         `time`,
         position_id
         ) VALUES (
         #{deviceId},
-        #{time},
-        #{positionId}
+        #{index.time},
+        #{index.positionId}
         )
     </insert>
 
@@ -35,16 +34,21 @@
     </select>
 
     <select id="countIndices" resultType="int">
-        SELECT count(0) FROM position_indices
+        <![CDATA[
+        SELECT COUNT(position_id) FROM position_indices
         WHERE device_id = #{deviceId}
-        AND time BETWEEN (#{startDate} AND #{endDate})
+        AND `time` >= #{startDate}
+        AND `time` <= #{endDate})
+        ]]>
     </select>
 
     <select id="batchIndices" resultMap="indexResultMap">
+        <![CDATA[
         SELECT * FROM position_indices
         WHERE device_id = #{deviceId}
-        AND `time` &gt; #{startDate}
+        AND `time` > #{startDate}
         ORDER BY `time` ASC limit #{limit}
+        ]]>
     </select>
 
 </mapper>

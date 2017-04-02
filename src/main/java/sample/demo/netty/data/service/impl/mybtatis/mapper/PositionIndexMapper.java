@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PositionIndexMapper {
 
-    int insertIndex(PositionIndex index);
+    int insertIndex(@Param("deviceId") long deviceId, @Param("index") PositionIndex index);
 
     PositionIndex selectIndex(@Param("deviceId") long deviceId
             , @Param("positionId") long positionId);

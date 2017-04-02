@@ -8,25 +8,25 @@
 	   http://www.dangdang.com/schema/ddframe/rdb/rdb.xsd">
     <!--数据源0-->
     <bean name="ds_0" parent="defaultDataSource">
-        <property name="url" value="${datasource.url.0}"/>
+        <property name="jdbcUrl" value="${datasource.url.0}"/>
         <property name="username" value="${datasource.user.0}"/>
         <property name="password" value="${datasource.password.0}"/>
     </bean>
     <!--数据源1-->
     <bean name="ds_1" parent="defaultDataSource">
-        <property name="url" value="${datasource.url.1}"/>
+        <property name="jdbcUrl" value="${datasource.url.1}"/>
         <property name="username" value="${datasource.user.1}"/>
         <property name="password" value="${datasource.password.1}"/>
     </bean>
     <!--数据源2-->
     <bean name="ds_2" parent="defaultDataSource">
-        <property name="url" value="${datasource.url.2}"/>
+        <property name="jdbcUrl" value="${datasource.url.2}"/>
         <property name="username" value="${datasource.user.2}"/>
         <property name="password" value="${datasource.password.2}"/>
     </bean>
     <!--数据源3-->
     <bean name="ds_3" parent="defaultDataSource">
-        <property name="url" value="${datasource.url.3}"/>
+        <property name="jdbcUrl" value="${datasource.url.3}"/>
         <property name="username" value="${datasource.user.3}"/>
         <property name="password" value="${datasource.password.3}"/>
     </bean>
@@ -39,6 +39,10 @@
                                 actual-tables="${positions.table.names}"
                                 database-strategy="positionDatabaseStrategy"
                                 table-strategy="positionTableStrategy"/>
+                <rdb:table-rule logic-table="position_indices"
+                                actual-tables="${position.indices.table.names}"
+                                database-strategy="positionIndexDatabaseStrategy"
+                                table-strategy="positionIndexTableStrategy"/>
             </rdb:table-rules>
             <rdb:default-database-strategy sharding-columns="none"
                                            algorithm-class="com.dangdang.ddframe.rdb.sharding.api.strategy.database.NoneDatabaseShardingAlgorithm"/>
@@ -54,6 +58,12 @@
     <rdb:strategy id="positionTableStrategy"
                   sharding-columns="device_id,time"
                   algorithm-class="sample.demo.netty.data.service.impl.mybtatis.sharding.PositionTableStrategy"/>
+    <rdb:strategy id="positionIndexDatabaseStrategy"
+                  sharding-columns="device_id"
+                  algorithm-class="sample.demo.netty.data.service.impl.mybtatis.sharding.PositionIndexDatabaseStrategy"/>
+    <rdb:strategy id="positionIndexTableStrategy"
+                  sharding-columns="device_id"
+                  algorithm-class="sample.demo.netty.data.service.impl.mybtatis.sharding.PositionIndexTableStrategy"/>
 
 </beans>
 

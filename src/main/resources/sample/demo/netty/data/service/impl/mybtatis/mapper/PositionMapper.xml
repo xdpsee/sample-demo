@@ -69,11 +69,11 @@
         )
     </insert>
 
-    <select id="select" resultMap="positionResultMap" parameterType="PositionIndex">
+    <select id="select" resultMap="positionResultMap">
         SELECT * FROM positions
         WHERE device_id = #{deviceId}
-        AND `time` = #{time}
-        AND id = #{positionId} limit 1
+        AND `time` = #{index.time}
+        AND id = #{index.positionId} limit 1
     </select>
 
     <select id="batchSelect" resultMap="positionResultMap">

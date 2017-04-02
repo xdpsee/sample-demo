@@ -14,11 +14,11 @@ public class ShardingDatabaseGen {
 
                 FileOutputStream outputStream = new FileOutputStream(String.format("trace-db%d.schema.sql", i));
                 StringBuilder sb = new StringBuilder();
-                String dbFormat = "DROP DATABASE IF EXISTS `trace-db%d`;\n" +
+                String formatDatabase = "DROP DATABASE IF EXISTS `trace-db%d`;\n" +
                         "CREATE DATABASE `trace-db%d` DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;\n" +
                         "USE `trace-db%d`;\n\n";
 
-                String format =
+                String formatPositions =
                         "CREATE TABLE positions_%04d_m%02d(\n" +
                                 "  id BIGINT UNSIGNED PRIMARY KEY NOT NULL ,\n" +
                                 "  gmt_create DATETIME NOT NULL,\n" +
@@ -40,16 +40,25 @@ public class ShardingDatabaseGen {
                                 "  UNIQUE KEY udx_1(id,device_id) \n" +
                                 ")ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;\n";
 
-                outputStream.write(String.format(dbFormat, i, i, i).getBytes());
+                String formatPositionIndices = "CREATE TABLE position_indices_%04d (\n" +
+                        "  device_id BIGINT UNSIGNED NOT NULL ,\n" +
+                        "  time DATETIME NOT NULL,\n" +
+                        "  position_id BIGINT UNSIGNED NOT NULL ,\n" +
+                        "  KEY idx_1 (device_id, time),\n" +
+                        "  UNIQUE KEY idx_2 (device_id, position_id)\n" +
+                        ") ENGINE=InnoDB;\n";
+
+                outputStream.write(String.format(formatDatabase, i, i, i).getBytes());
 
                 for (int j = 0; j < 256; ++j) {
                     for (int m = 1; m <= 12; ++m) {
-                        sb.append(String.format(format, i * 256 + j, m));
+                        sb.append(String.format(formatPositions, i * 256 + j, m));
                     }
+
+                    sb.append(String.format(formatPositionIndices, i * 256 + j));
                 }
 
                 outputStream.write(sb.toString().getBytes());
-
                 outputStream.close();
             }
         } catch (Exception e) {
@@ -57,6 +66,5 @@ public class ShardingDatabaseGen {
         }
 
     }
-
 }
 

@@ -1,6 +1,5 @@
 package sample.demo.netty.data.domain;
 
-import com.alibaba.druid.util.HexBin;
 import lombok.Getter;
 import lombok.Setter;
 import sample.demo.netty.core.Entity;
@@ -123,7 +122,7 @@ public class Position extends Entity implements Message {
 
         if (hasKey(KEY_ORIGINAL)) {
             String hexStr = getString(KEY_ORIGINAL);
-            return HexBin.decode(hexStr);
+            return new byte[0];//HexBin.decode(hexStr);
         }
 
         return new byte[0];

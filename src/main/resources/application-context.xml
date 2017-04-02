@@ -18,6 +18,7 @@
             <list>
                 <value>classpath:/conf/jdbc.properties</value>
                 <value>classpath:/conf/positions.table.properties</value>
+                <value>classpath:/conf/position.indices.table.properties</value>
             </list>
         </property>
     </bean>
@@ -26,7 +27,6 @@
     <import resource="datasource-context.xml" />
     <import resource="sharding-jdbc.xml"/>
     <import resource="ehcache-context.xml" />
-    <import resource="druid-context.xml" />
 
 </beans>
 

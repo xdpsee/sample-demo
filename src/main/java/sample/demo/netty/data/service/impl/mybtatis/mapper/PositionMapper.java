@@ -10,7 +10,7 @@ public interface PositionMapper {
 
     int insert(Position position);
 
-    Position select(PositionIndex index);
+    Position select(@Param("deviceId") long deviceId, @Param("index") PositionIndex index);
 
     List<Position> batchSelect(@Param("deviceId") long deviceId
             , @Param("indices") List<PositionIndex> indices);

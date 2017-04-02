@@ -11,10 +11,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class PositionIndex {
 
-    private long deviceId;
+    private long positionId;
 
     private Date time;
-
-    private long positionId;
 
 }

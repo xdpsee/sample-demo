@@ -45,7 +45,7 @@ public class PositionMapperTest extends AbstractTransactionalJUnit4SpringContext
 
         assertEquals(1, ret);
 
-        Position pr = positionMapper.select(new PositionIndex(1L, position.getTime(), 1L));
+        Position pr = positionMapper.select(1L, new PositionIndex(1L, position.getTime()));
         assertNotNull(pr);
 
     }
@@ -76,8 +76,8 @@ public class PositionMapperTest extends AbstractTransactionalJUnit4SpringContext
         assertEquals(1, positionMapper.insert(position));
 
         List<Position> positions = positionMapper.batchSelect(1L
-                , Arrays.asList(new PositionIndex(1L, GMT.date(2017,1, 1, 1, 0, 0), 1L)
-                        , new PositionIndex(1L, GMT.date(2017,2, 1, 1, 0, 0), 1025L)));
+                , Arrays.asList(new PositionIndex(1L, GMT.date(2017,1, 1, 1, 0, 0))
+                        , new PositionIndex(1025L, GMT.date(2017,2, 1, 1, 0, 0))));
         assertEquals(2, positions.size());
 
     }
