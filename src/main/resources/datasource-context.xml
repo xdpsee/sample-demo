@@ -19,7 +19,15 @@
         <!-- 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，参考MySQL wait_timeout参数 -->
         <property name="maxLifetime" value="1800000" />
         <!-- 连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count) -->
-        <property name="maximumPoolSize" value="15" />
+        <property name="maximumPoolSize" value="20" />
+        <property name="dataSourceProperties">
+            <props>
+                <prop key="cachePrepStmts">true</prop>
+                <prop key="useServerPrepStmts">true</prop>
+                <prop key="prepStmtCacheSize">512</prop>
+                <prop key="prepStmtCacheSqlLimit">2048</prop>
+            </props>
+        </property>
     </bean>
 
     <bean id="sqlSessionFactory" name="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
