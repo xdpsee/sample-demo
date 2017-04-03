@@ -7,14 +7,23 @@ import sample.demo.netty.utils.JSONUtils;
 
 import java.io.UnsupportedEncodingException;
 
-public class JsonTypeSerializer<T> implements RedisSerializer<T>{
+public class JsonSerializer<T> implements RedisSerializer<T> {
+
+    private Class<T> clazz = null;
+    private TypeReference<T> typeRef = null;
+
+    public JsonSerializer(Class<T> clazz) {
+        this.clazz = clazz;
+    }
+
+    public JsonSerializer(TypeReference<T> typeRef) {
+        this.typeRef = typeRef;
+    }
 
     @Override
     public byte[] serialize(T t) throws SerializationException {
-
         try {
-            String str = JSONUtils.toJsonString(t);
-            return str.getBytes("UTF-8");
+            return JSONUtils.toJsonString(t).getBytes("UTF-8");
         } catch (NullPointerException|UnsupportedEncodingException e) {
             throw new SerializationException("serialize error", e);
         }
@@ -24,8 +33,14 @@ public class JsonTypeSerializer<T> implements RedisSerializer<T>{
     public T deserialize(byte[] bytes) throws SerializationException {
 
         try {
-            String str = new String(bytes, "UTF-8");
-            return JSONUtils.fromJsonString(str, new TypeReference<T>(){});
+            String value = new String(bytes, "UTF-8");
+
+            if (typeRef != null) {
+                return JSONUtils.fromJsonString(value, typeRef);
+            } else {
+                return JSONUtils.fromJsonString(value, clazz);
+            }
+
         } catch (UnsupportedEncodingException e) {
             throw new SerializationException("deserialize error", e);
         }

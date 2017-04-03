@@ -8,7 +8,7 @@
     <bean id="jedisConnFactory"
           class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
           p:hostName="127.0.0.1"
-          p:port="6379"
+          p:port="6380"
           p:use-pool="true">
         <property name="poolConfig">
             <bean class="redis.clients.jedis.JedisPoolConfig">

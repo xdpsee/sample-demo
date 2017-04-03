@@ -12,7 +12,7 @@
             overflowToDisk="false"
             memoryStoreEvictionPolicy="LRU"/>
 
-    <cache name="LastPositionCache"
+    <cache name="LastPositionCacheTest"
            maxElementsInMemory="100000"
            eternal="false"
            timeToIdleSeconds="120"

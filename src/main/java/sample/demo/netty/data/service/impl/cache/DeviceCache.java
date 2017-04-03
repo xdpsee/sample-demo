@@ -1,8 +1,13 @@
 package sample.demo.netty.data.service.impl.cache;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 import sample.demo.netty.data.domain.Device;
+import sample.demo.netty.data.service.impl.cache.serializer.JsonSerializer;
+import sample.demo.netty.data.service.impl.cache.serializer.LongSerializer;
 
 @Component
 public class DeviceCache {
@@ -33,11 +38,29 @@ public class DeviceCache {
     @Component
     public static class DeviceByIdCache extends AbstractRedisCache<Long, Device> {
 
+        @Override
+        public RedisSerializer<Long> keySerializer() {
+            return new LongSerializer();
+        }
+
+        @Override
+        public RedisSerializer<Device> valueSerializer() {
+            return new JsonSerializer<>(new TypeReference<Device>(){});
+
+        }
     }
 
     @Component
     public static class DeviceByUniqueCache extends AbstractRedisCache<String, Device> {
+        @Override
+        public RedisSerializer<String> keySerializer() {
+            return new StringRedisSerializer();
+        }
 
+        @Override
+        public RedisSerializer<Device> valueSerializer() {
+            return new JsonSerializer<>(new TypeReference<Device>(){});
+        }
     }
 
 }

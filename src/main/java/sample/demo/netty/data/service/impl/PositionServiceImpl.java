@@ -1,8 +1,6 @@
 package sample.demo.netty.data.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import sample.demo.netty.data.domain.Position;
@@ -10,7 +8,6 @@ import sample.demo.netty.data.domain.support.PositionIndex;
 import sample.demo.netty.data.service.DeviceService;
 import sample.demo.netty.data.service.PositionService;
 import sample.demo.netty.data.service.impl.cache.LastPositionCache;
-import sample.demo.netty.data.service.impl.mybtatis.mapper.DeviceMapper;
 import sample.demo.netty.data.service.impl.mybtatis.mapper.PositionIndexMapper;
 import sample.demo.netty.data.service.impl.mybtatis.mapper.PositionMapper;
 
