@@ -7,6 +7,7 @@ import sample.demo.netty.core.CommandType;
 import sample.demo.netty.data.domain.Device;
 import sample.demo.netty.data.service.DeviceService;
 import sample.demo.netty.data.service.exception.DeviceNotFoundException;
+import sample.demo.netty.data.service.impl.cache.DeviceCache;
 import sample.demo.netty.data.service.impl.mybtatis.mapper.DeviceMapper;
 import sample.demo.netty.data.service.impl.mybtatis.mapper.ModelMapper;
 
@@ -19,15 +20,17 @@ public class DeviceServiceImpl implements DeviceService {
     private DeviceMapper deviceMapper;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private DeviceCache deviceCache;
 
     @Override
     public Device getDeviceById(long id) {
-        return deviceMapper.selectById(id);
+        return loadDevice(id);
     }
 
     @Override
     public Device getDeviceByUnique(String uniqueId) {
-        return deviceMapper.selectByUnique(uniqueId);
+        return loadDevice(uniqueId);
     }
 
     @Override
@@ -39,4 +42,42 @@ public class DeviceServiceImpl implements DeviceService {
 
         return Sets.newHashSet(modelMapper.selectSupportedCommands(device.getProtocol(), device.getModel()));
     }
+
+    @Override
+    public Long lastPosition(long deviceId) {
+
+        Device device = getDeviceById(deviceId);
+        if (device != null) {
+            return device.getLong(Device.KEY_LAST_POSITION);
+        }
+
+        return null;
+    }
+
+    private Device loadDevice(Object identify) {
+
+        assert identify instanceof Long || identify instanceof String : "error type";
+
+        Device device = (identify instanceof String)
+                ? deviceCache.get((String) identify) : deviceCache.get((Long)identify);
+        if (null != device) {
+            return device;
+        }
+
+        if (identify instanceof String) {
+            device = deviceMapper.selectByUnique((String) identify);
+            if (device != null) {
+                deviceCache.set((String)identify, device);
+            }
+        } else {
+            device = deviceMapper.selectById(((Long)identify));
+            if (device != null) {
+                deviceCache.set((Long) identify, device);
+            }
+        }
+
+        return  device;
+    }
+
+
 }

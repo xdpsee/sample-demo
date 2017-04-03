@@ -27,6 +27,7 @@
     <import resource="datasource-context.xml" />
     <import resource="sharding-jdbc.xml"/>
     <import resource="ehcache-context.xml" />
+    <import resource="redis-context.xml"/>
 
 </beans>
 

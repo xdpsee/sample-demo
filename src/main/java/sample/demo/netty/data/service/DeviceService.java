@@ -13,5 +13,6 @@ public interface DeviceService {
 
     Set<CommandType> getSupportedCommands(long deviceId);
 
+    Long lastPosition(long deviceId);
 }
 

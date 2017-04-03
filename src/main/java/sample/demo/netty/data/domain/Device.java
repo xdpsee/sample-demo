@@ -6,6 +6,9 @@ import sample.demo.netty.core.Entity;
 @Data
 public class Device extends Entity {
 
+    public static final String KEY_LAST_POSITION = "lastPos";
+
+
     private String uniqueId; // IMEI
 
     private Category category;
@@ -19,6 +22,7 @@ public class Device extends Entity {
     private String phone;
 
     private String contacts;
+
 
 
 }
