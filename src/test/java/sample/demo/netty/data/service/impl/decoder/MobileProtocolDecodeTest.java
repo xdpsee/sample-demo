@@ -22,13 +22,13 @@ public class MobileProtocolDecodeTest {
         /**
          * ##1,{protocol_version},{uuid},{app_version},{gmt_time}#
          */
-        String message = "##1,1.0,123456789123456,1.0,20170318060354#";
+        String message = "##1,1.0,888888888888888,1.0,20170318060354#";
         Parser parser = new Parser(MobileProtocolDecoder.PATTERN_LOGIN, message);
         assertTrue(parser.matches());
 
         assertEquals(1, parser.nextInt());
         assertEquals(1.0f, parser.nextDouble(), 0);
-        assertEquals("123456789123456", parser.next());
+        assertEquals("888888888888888", parser.next());
         assertEquals(1.0f, parser.nextDouble(), 0);
         assertEquals("20170318060354", parser.next());
 
@@ -41,13 +41,13 @@ public class MobileProtocolDecodeTest {
          * ##2,{protocol_version},{uuid},{N2240.8887E11359.2994},{alt},{speed},{gmt_time}#
          */
 
-        String message = "##2,1.0,123456789123456,N2240.888E11359.2994,326.8,21.6,20170318060354#";
+        String message = "##2,1.0,888888888888888,N2240.888E11359.2994,326.8,21.6,20170318060354#";
         Parser parser = new Parser(MobileProtocolDecoder.PATTERN_POSITION, message);
         assertTrue(parser.matches());
 
         assertEquals(2, parser.nextInt());
         assertEquals(1.0f, parser.nextDouble(), 0);
-        assertEquals("123456789123456", parser.next());
+        assertEquals("888888888888888", parser.next());
 
         double latitude = parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN);
         double longitude = parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN);

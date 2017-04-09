@@ -2,19 +2,33 @@ package sample.demo.netty.protocol.mobile.decoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
+import io.netty.util.AttributeKey;
+import org.springframework.beans.factory.annotation.Autowired;
 import sample.demo.netty.core.Message;
 import sample.demo.netty.core.decoder.AbstractProtocolDecoder;
+import sample.demo.netty.data.domain.Network;
+import sample.demo.netty.data.domain.Position;
+import sample.demo.netty.data.service.DeviceService;
+import sample.demo.netty.data.service.PositionService;
+import sample.demo.netty.data.service.exception.DecodeException;
 import sample.demo.netty.protocol.mobile.message.RegistryMessage;
 import sample.demo.netty.utils.Parser;
 import sample.demo.netty.utils.PatternBuilder;
 
 import java.net.SocketAddress;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 public class MobileProtocolDecoder extends AbstractProtocolDecoder {
+
+    @Autowired
+    private PositionService positionService;
+    @Autowired
+    private DeviceService deviceService;
 
 
     public static final Pattern PATTERN_LOGIN = new PatternBuilder()
@@ -50,7 +64,7 @@ public class MobileProtocolDecoder extends AbstractProtocolDecoder {
      * ##3,{protocol_version},{uuid},{gmt_time}#
      */
     @Override
-    public Object decode(Channel channel, SocketAddress remoteAddress, Object msg) {
+    public Object decode(Channel channel, SocketAddress remoteAddress, Object msg) throws DecodeException {
 
         if (msg instanceof ByteBuf) {
 
@@ -58,13 +72,14 @@ public class MobileProtocolDecoder extends AbstractProtocolDecoder {
             ((ByteBuf) msg).getBytes(0, bytes);
             String message = new String(bytes);
 
-            return handle(message);
+            return handle(channel, message);
+
         }
 
         return null;
     }
 
-    private Message handle(String message) {
+    private Message handle(Channel channel, String message) throws DecodeException {
 
         if (message.startsWith("##1")) {
             Parser parser = new Parser(PATTERN_LOGIN, message);
@@ -79,12 +94,49 @@ public class MobileProtocolDecoder extends AbstractProtocolDecoder {
         }
 
         if (message.startsWith("##2")) {
-            Parser parser = new Parser(PATTERN_LOGIN, message);
+            Parser parser = new Parser(PATTERN_POSITION, message);
             if (parser.matches()) {
                 parser.nextInt(); // skip cmd
 
+                Long deviceId = (Long) channel.attr(AttributeKey.valueOf("uniqueId")).get();
+                if (null == deviceId) {
+                    throw new DecodeException("device is not login.");
+                }
 
+                Position position = new Position();
+                position.setGmtCreate(new Date());
+                position.setGmtModified(new Date());
+                position.setDeviceId(deviceId);
+                position.setLocated(true);
 
+                double protocolVer = parser.nextDouble();
+                String uniqueId = parser.next();
+                double latitude = parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN);
+                double longitude = parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN);
+                position.setLatitude(latitude);
+                position.setLongitude(longitude);
+                double altitude = parser.nextDouble();
+                position.setAltitude(altitude);
+                double speed = parser.nextDouble();
+                position.setSpeed(speed);
+                String timeStr = parser.next();
+                try {
+                    Date date = DATE_FORMAT.get().parse(timeStr);
+                    position.setTime(date);
+                    position.setFixedTime(date);
+                } catch (ParseException e) {
+                    throw new DecodeException(e);
+                }
+
+                position.setOutdated(isOutdated(position));
+                position.setNetwork(new Network());
+
+                positionService.savePosition(position);
+                if (!position.isOutdated()) {
+                    deviceService.updateLastPosition(deviceId, position.getId());
+                }
+
+                return position;
             }
         }
 
@@ -95,6 +147,11 @@ public class MobileProtocolDecoder extends AbstractProtocolDecoder {
         return null;
     }
 
+    private boolean isOutdated(Position position) {
+
+        Position lastPos = positionService.getLastPosition(position.getDeviceId());
+        return !(null == lastPos || position.getTime().after(lastPos.getTime()));
+    }
 
 }
 

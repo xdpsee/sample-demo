@@ -38,7 +38,7 @@
         SELECT COUNT(position_id) FROM position_indices
         WHERE device_id = #{deviceId}
         AND `time` >= #{startDate}
-        AND `time` <= #{endDate})
+        AND `time` <= #{endDate}
         ]]>
     </select>
 

@@ -11,4 +11,9 @@ public interface DeviceMapper {
 
     Device selectByUnique(@Param("uniqueId") String uniqueId);
 
+    int updateProperty(@Param("deviceId") long deviceId
+            , @Param("property") String property
+            , @Param("value") Object value);
 }
+
+

@@ -14,7 +14,7 @@ public class MobileFrameDecoder extends ByteToMessageDecoder {
 
     /**
      * ##1,{protocol_version},{uuid},{app_version},{gmt_time}#
-     * ##2,{protocol_version},{sequence},{uuid},{lat},{lng},{alt},{speed},{gmt_time}#
+     * ##2,{protocol_version},{uuid},{lat&lng},{alt},{speed},{gmt_time}#
      * ##3,{protocol_version},{uuid},{gmt_time}#
      */
     @Override

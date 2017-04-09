@@ -33,16 +33,20 @@
     <!-- Sharding 数据源 -->
     <rdb:data-source id="dataSource">
         <rdb:sharding-rule data-sources="defaultDataSource,ds_0,ds_1,ds_2,ds_3"
-                           default-data-source="defaultDataSource">
+                           default-data-source="defaultDataSource"
+                           id-generator-class="com.dangdang.ddframe.rdb.sharding.id.generator.self.IPIdGenerator">
             <rdb:table-rules>
                 <rdb:table-rule logic-table="positions"
                                 actual-tables="${positions.table.names}"
                                 database-strategy="positionDatabaseStrategy"
-                                table-strategy="positionTableStrategy"/>
+                                table-strategy="positionTableStrategy">
+                    <rdb:auto-increment-column column-name="id"/>
+                </rdb:table-rule>
                 <rdb:table-rule logic-table="position_indices"
                                 actual-tables="${position.indices.table.names}"
                                 database-strategy="positionIndexDatabaseStrategy"
-                                table-strategy="positionIndexTableStrategy"/>
+                                table-strategy="positionIndexTableStrategy">
+                </rdb:table-rule>
             </rdb:table-rules>
             <rdb:default-database-strategy sharding-columns="none"
                                            algorithm-class="com.dangdang.ddframe.rdb.sharding.api.strategy.database.NoneDatabaseShardingAlgorithm"/>

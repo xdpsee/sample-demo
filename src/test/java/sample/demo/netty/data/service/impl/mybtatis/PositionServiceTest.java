@@ -1,4 +1,4 @@
-package sample.demo.netty.data.service.impl.mybtatis.mapper;
+package sample.demo.netty.data.service.impl.mybtatis;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import sample.demo.netty.data.domain.Network;
 import sample.demo.netty.data.domain.Position;
 import sample.demo.netty.data.domain.support.PositionIndex;
+import sample.demo.netty.data.service.PositionService;
+import sample.demo.netty.data.service.impl.mybtatis.mapper.PositionIndexMapper;
+import sample.demo.netty.data.service.impl.mybtatis.mapper.PositionMapper;
 import sample.demo.netty.utils.GMT;
 
 import java.util.Arrays;
@@ -18,18 +21,22 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:application-context.xml")
 @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRES_NEW)
-public class PositionMapperTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class  PositionServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     private PositionMapper positionMapper;
+    @Autowired
+    private PositionIndexMapper positionIndexMapper;
+    @Autowired
+    private PositionService positionService;
+
 
     @Test
-    public void testInsert() throws Exception {
+    public void testSavePosition() {
 
         Position position = new Position();
         position.setGmtCreate(new Date());
@@ -40,32 +47,12 @@ public class PositionMapperTest extends AbstractTransactionalJUnit4SpringContext
         position.setLongitude(0);
         position.setTime(GMT.date(2017,1, 1, 1, 0, 0));
         position.setNetwork(new Network());
-        int ret = positionMapper.insert(position);
 
-        assertEquals(1, ret);
-
-        Long positionId = position.getId();
-
-        Position pr = positionMapper.select(1L, new PositionIndex(positionId, position.getTime()));
-        assertNotNull(pr);
-
-    }
-
-    @Test
-    public void testBatchSelect() {
-        Position position = new Position();
-        position.setGmtCreate(new Date());
-        position.setGmtModified(new Date());
-        position.setDeviceId(1L);
-        position.setLocated(true);
-        position.setLatitude(0);
-        position.setLongitude(0);
-        position.setTime(GMT.date(2017,1, 1, 1, 0, 0));
-        position.setNetwork(new Network());
-        assertEquals(1, positionMapper.insert(position));
+        positionService.savePosition(position);
 
         Long posId1 = position.getId();
 
+        position = new Position();
         position.setGmtCreate(new Date());
         position.setGmtModified(new Date());
         position.setDeviceId(1L);
@@ -74,7 +61,8 @@ public class PositionMapperTest extends AbstractTransactionalJUnit4SpringContext
         position.setLongitude(0);
         position.setTime(GMT.date(2017,2, 1, 1, 0, 0));
         position.setNetwork(new Network());
-        assertEquals(1, positionMapper.insert(position));
+
+        positionService.savePosition(position);
 
         Long posId2 = position.getId();
 
@@ -82,6 +70,14 @@ public class PositionMapperTest extends AbstractTransactionalJUnit4SpringContext
                 , Arrays.asList(new PositionIndex(posId1, GMT.date(2017,1, 1, 1, 0, 0))
                         , new PositionIndex(posId2, GMT.date(2017,2, 1, 1, 0, 0))));
         assertEquals(2, positions.size());
+
+        int count = positionIndexMapper.countIndices(1L
+                , GMT.date(2017,1, 1, 1, 0, 0)
+                , GMT.date(2017,2, 1, 1, 0, 0));
+        assertEquals(2, count);
+
+
+
     }
 
 }

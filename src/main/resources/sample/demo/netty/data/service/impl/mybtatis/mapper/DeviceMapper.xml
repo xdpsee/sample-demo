@@ -60,4 +60,8 @@
         SELECT * FROM devices WHERE unique_id = #{uniqueId}
     </select>
 
+    <update id="updateProperty">
+        UPDATE devices SET extras=JSON_SET(extras, concat('$.', #{property}), #{value}) WHERE id = #{deviceId}
+    </update>
+
 </mapper>

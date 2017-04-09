@@ -31,9 +31,8 @@
                 typeHandler="sample.demo.netty.data.service.impl.mybtatis.type.MapTypeHandler"/>
     </resultMap>
 
-    <insert id="insert" parameterType="Position">
+    <insert id="insert" parameterType="Position" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO positions (
-        id,
         gmt_create,
         gmt_modified,
         device_id,
@@ -50,7 +49,6 @@
         network,
         extras
         ) VALUES (
-        #{id},
         now(),
         now(),
         #{deviceId},

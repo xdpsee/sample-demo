@@ -7,6 +7,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import sample.demo.netty.core.Configs;
 import sample.demo.netty.data.domain.Position;
+import sample.demo.netty.data.service.exception.DecodeException;
 
 import javax.xml.bind.DatatypeConverter;
 import java.net.SocketAddress;
@@ -37,7 +38,7 @@ public abstract class AbstractProtocolDecoder extends MessageToMessageDecoder<Ob
         }
     }
 
-    public abstract Object decode(Channel channel, SocketAddress remoteAddress, Object msg);
+    public abstract Object decode(Channel channel, SocketAddress remoteAddress, Object msg) throws DecodeException;
 
     private void saveOrigin(Object decodedMessage, Object originalMessage) {
 

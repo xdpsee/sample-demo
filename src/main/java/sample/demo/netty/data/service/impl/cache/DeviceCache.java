@@ -35,6 +35,14 @@ public class DeviceCache {
         deviceByIdCache.put(device.getId(), device);
     }
 
+    public void remove(long deviceId) {
+        Device device = get(deviceId);
+        if (device != null) {
+            deviceByIdCache.remove(deviceId);
+            deviceByUniqueCache.remove(device.getUniqueId());
+        }
+    }
+
     @Component
     public static class DeviceByIdCache extends AbstractRedisCache<Long, Device> {
 
