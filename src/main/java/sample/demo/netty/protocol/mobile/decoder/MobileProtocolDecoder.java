@@ -3,12 +3,10 @@ package sample.demo.netty.protocol.mobile.decoder;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
-import org.springframework.beans.factory.annotation.Autowired;
 import sample.demo.netty.core.Message;
 import sample.demo.netty.core.decoder.AbstractProtocolDecoder;
 import sample.demo.netty.data.domain.Network;
 import sample.demo.netty.data.domain.Position;
-import sample.demo.netty.data.service.PositionService;
 import sample.demo.netty.data.service.exception.DecodeException;
 import sample.demo.netty.protocol.mobile.message.RegistryMessage;
 import sample.demo.netty.utils.Parser;
@@ -23,9 +21,6 @@ import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 public class MobileProtocolDecoder extends AbstractProtocolDecoder {
-
-    @Autowired
-    private PositionService positionService;
 
     public static final Pattern PATTERN_LOGIN = new PatternBuilder()
             .text("##")
@@ -105,8 +100,8 @@ public class MobileProtocolDecoder extends AbstractProtocolDecoder {
                 position.setDeviceId(deviceId);
                 position.setLocated(true);
 
-                double protocolVer = parser.nextDouble();
-                String uniqueId = parser.next();
+                parser.nextDouble(); // skip ProtocolVersion
+                parser.next(); // skip UniqueId
                 double latitude = parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN);
                 double longitude = parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN);
                 position.setLatitude(latitude);
@@ -125,8 +120,6 @@ public class MobileProtocolDecoder extends AbstractProtocolDecoder {
                 }
 
                 position.setNetwork(new Network());
-
-                positionService.savePosition(position);
 
                 return position;
             }
