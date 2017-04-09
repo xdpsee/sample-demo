@@ -15,6 +15,5 @@ public interface DeviceService {
 
     Long lastPosition(long deviceId);
 
-    void updateLastPosition(long deviceId, long positionId);
 }
 

@@ -8,7 +8,6 @@ import sample.demo.netty.core.Message;
 import sample.demo.netty.core.decoder.AbstractProtocolDecoder;
 import sample.demo.netty.data.domain.Network;
 import sample.demo.netty.data.domain.Position;
-import sample.demo.netty.data.service.DeviceService;
 import sample.demo.netty.data.service.PositionService;
 import sample.demo.netty.data.service.exception.DecodeException;
 import sample.demo.netty.protocol.mobile.message.RegistryMessage;
@@ -27,9 +26,6 @@ public class MobileProtocolDecoder extends AbstractProtocolDecoder {
 
     @Autowired
     private PositionService positionService;
-    @Autowired
-    private DeviceService deviceService;
-
 
     public static final Pattern PATTERN_LOGIN = new PatternBuilder()
             .text("##")
@@ -128,13 +124,9 @@ public class MobileProtocolDecoder extends AbstractProtocolDecoder {
                     throw new DecodeException(e);
                 }
 
-                position.setOutdated(isOutdated(position));
                 position.setNetwork(new Network());
 
                 positionService.savePosition(position);
-                if (!position.isOutdated()) {
-                    deviceService.updateLastPosition(deviceId, position.getId());
-                }
 
                 return position;
             }
@@ -147,11 +139,7 @@ public class MobileProtocolDecoder extends AbstractProtocolDecoder {
         return null;
     }
 
-    private boolean isOutdated(Position position) {
 
-        Position lastPos = positionService.getLastPosition(position.getDeviceId());
-        return !(null == lastPos || position.getTime().after(lastPos.getTime()));
-    }
 
 }
 

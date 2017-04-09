@@ -54,14 +54,6 @@ public class DeviceServiceImpl implements DeviceService {
         return null;
     }
 
-    @Override
-    public void updateLastPosition(long deviceId, long positionId) {
-
-        deviceMapper.updateProperty(deviceId, Device.KEY_LAST_POSITION, positionId);
-        deviceCache.remove(deviceId);
-
-    }
-
     private Device loadDevice(Object identify) {
 
         assert identify instanceof Long || identify instanceof String : "error type";

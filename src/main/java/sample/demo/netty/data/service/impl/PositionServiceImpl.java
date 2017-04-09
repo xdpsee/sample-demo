@@ -33,6 +33,9 @@ public class PositionServiceImpl implements PositionService {
         PositionIndex index = new PositionIndex(position.getId(), position.getTime());
         positionIndexMapper.insertIndex(position.getDeviceId(), index);
 
+        if (!isOutdated(position)) {
+            lastPositionCache.put(position.getDeviceId(), position);
+        }
     }
 
     @Override
@@ -64,6 +67,11 @@ public class PositionServiceImpl implements PositionService {
         }
 
         return pos;
+    }
+
+    private boolean isOutdated(Position position) {
+        Position lastPos = lastPositionCache.get(position.getDeviceId());
+        return !(null == lastPos || position.getTime().after(lastPos.getTime()));
     }
 }
 
