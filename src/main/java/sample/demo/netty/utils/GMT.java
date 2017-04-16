@@ -1,7 +1,5 @@
 package sample.demo.netty.utils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,7 +7,6 @@ import java.util.TimeZone;
 
 public class GMT {
 
-    private static final ThreadLocal<DateFormat> dateFormat = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 
     /**
      *

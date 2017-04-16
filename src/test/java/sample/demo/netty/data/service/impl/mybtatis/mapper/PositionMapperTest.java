@@ -31,7 +31,7 @@ public class PositionMapperTest extends AbstractTransactionalJUnit4SpringContext
     @Test
     public void testInsert() throws Exception {
 
-        Position position = new Position();
+        Position position = Position.create("test-unique-id");
         position.setGmtCreate(new Date());
         position.setGmtModified(new Date());
         position.setDeviceId(1L);
@@ -53,7 +53,7 @@ public class PositionMapperTest extends AbstractTransactionalJUnit4SpringContext
 
     @Test
     public void testBatchSelect() {
-        Position position = new Position();
+        Position position = Position.create("test-unique-id");
         position.setGmtCreate(new Date());
         position.setGmtModified(new Date());
         position.setDeviceId(1L);

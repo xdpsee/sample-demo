@@ -2,13 +2,14 @@ package sample.demo.netty.protocol.mobile.decoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
-import io.netty.util.AttributeKey;
 import sample.demo.netty.core.Message;
 import sample.demo.netty.core.decoder.AbstractProtocolDecoder;
 import sample.demo.netty.data.domain.Network;
 import sample.demo.netty.data.domain.Position;
 import sample.demo.netty.data.service.exception.DecodeException;
 import sample.demo.netty.protocol.mobile.message.RegistryMessage;
+import sample.demo.netty.utils.ChannelAttribute;
+import sample.demo.netty.utils.ChannelAttributesUtils;
 import sample.demo.netty.utils.Parser;
 import sample.demo.netty.utils.PatternBuilder;
 
@@ -89,12 +90,13 @@ public class MobileProtocolDecoder extends AbstractProtocolDecoder {
             if (parser.matches()) {
                 parser.nextInt(); // skip cmd
 
-                Long deviceId = (Long) channel.attr(AttributeKey.valueOf("uniqueId")).get();
+                Long deviceId = (Long) ChannelAttributesUtils.get(channel, ChannelAttribute.DEVICE_ID);
                 if (null == deviceId) {
                     throw new DecodeException("device is not login.");
                 }
 
-                Position position = new Position();
+                String uniqueId = (String) ChannelAttributesUtils.get(channel, ChannelAttribute.DEVICE_UNIQUE_ID);
+                Position position = Position.create(uniqueId);
                 position.setGmtCreate(new Date());
                 position.setGmtModified(new Date());
                 position.setDeviceId(deviceId);

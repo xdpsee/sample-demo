@@ -27,7 +27,7 @@ public class LastPositionCacheTest extends AbstractTransactionalJUnit4SpringCont
             Position position = lastPositionCache.get(1L);
             assertEquals(null, position);
 
-            position = new Position();
+            position = Position.create("test-unique-id");
             position.setId(1024L);
             lastPositionCache.put(1L, position);
 

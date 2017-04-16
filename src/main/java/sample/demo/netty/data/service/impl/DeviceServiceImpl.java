@@ -8,6 +8,7 @@ import sample.demo.netty.data.domain.Device;
 import sample.demo.netty.data.service.DeviceService;
 import sample.demo.netty.data.service.exception.DeviceNotFoundException;
 import sample.demo.netty.data.service.impl.cache.DeviceCache;
+import sample.demo.netty.data.service.impl.cache.LastPositionCache;
 import sample.demo.netty.data.service.impl.mybtatis.mapper.DeviceMapper;
 import sample.demo.netty.data.service.impl.mybtatis.mapper.ModelMapper;
 
@@ -22,6 +23,8 @@ public class DeviceServiceImpl implements DeviceService {
     private ModelMapper modelMapper;
     @Autowired
     private DeviceCache deviceCache;
+    @Autowired
+    private LastPositionCache lastPositionCache;
 
     @Override
     public Device getDeviceById(long id) {
@@ -53,6 +56,8 @@ public class DeviceServiceImpl implements DeviceService {
 
         return null;
     }
+
+
 
     private Device loadDevice(Object identify) {
 

@@ -38,7 +38,7 @@ public class  PositionServiceTest extends AbstractTransactionalJUnit4SpringConte
     @Test
     public void testSavePosition() {
 
-        Position position = new Position();
+        Position position = Position.create("test-unique-id");
         position.setGmtCreate(new Date());
         position.setGmtModified(new Date());
         position.setDeviceId(1L);
@@ -52,7 +52,7 @@ public class  PositionServiceTest extends AbstractTransactionalJUnit4SpringConte
 
         Long posId1 = position.getId();
 
-        position = new Position();
+        position = Position.create("test-unique-id");
         position.setGmtCreate(new Date());
         position.setGmtModified(new Date());
         position.setDeviceId(1L);

@@ -8,8 +8,15 @@ import sample.demo.netty.core.Message;
 import java.util.Date;
 
 @SuppressWarnings("unused")
-public class Position extends Entity implements Message {
+public final class Position extends Entity implements Message {
 
+    public static Position create(String deviceUniqueId) {
+        Position pos = new Position();
+        pos.set(KEY_UNIQUE_ID, deviceUniqueId);
+        return pos;
+    }
+
+    public static final String KEY_UNIQUE_ID = "uniqueId";
     public static final String KEY_ORIGINAL = "raw";
     public static final String KEY_INDEX = "index";
     public static final String KEY_HDOP = "hdop";
@@ -118,6 +125,11 @@ public class Position extends Entity implements Message {
     private Network network;
 
     @Override
+    public String getUniqueId() {
+        return getString(KEY_UNIQUE_ID);
+    }
+
+    @Override
     public byte[] rawBytes() {
 
         if (hasKey(KEY_ORIGINAL)) {
@@ -126,5 +138,9 @@ public class Position extends Entity implements Message {
         }
 
         return new byte[0];
+    }
+
+    private Position() {
+
     }
 }
