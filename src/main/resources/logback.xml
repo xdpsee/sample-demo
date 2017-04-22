@@ -3,12 +3,13 @@
     <property name="LOG_HOME" value="${user.home}" />
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <Encoding>UTF-8</Encoding>
-        <layout class="ch.qos.logback.classic.PatternLayout">
+        <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
             </pattern>
-        </layout>
+        </encoder>
     </appender>
-    <appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="R_FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
         <file>${LOG_HOME}/logs/mybatis-demo/main.log</file>
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
@@ -27,15 +28,15 @@
         </encoder>
     </appender>
 
-    <appender name ="ASYNC_FILE" class= "ch.qos.logback.classic.AsyncAppender">
+    <appender name ="FILE" class= "ch.qos.logback.classic.AsyncAppender">
         <discardingThreshold >0</discardingThreshold>
         <queueSize>256</queueSize>
-        <appender-ref ref ="FILE"/>
+        <appender-ref ref ="R_FILE"/>
     </appender>
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="ASYNC_FILE" />
+        <appender-ref ref="FILE" />
     </root>
 
 </configuration>

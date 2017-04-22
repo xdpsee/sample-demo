@@ -4,11 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-
     <bean id="jedisConnFactory"
           class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
           p:hostName="127.0.0.1"
-          p:port="6380"
+          p:port="6379"
           p:use-pool="true">
         <property name="poolConfig">
             <bean class="redis.clients.jedis.JedisPoolConfig">

@@ -17,8 +17,10 @@ public class PositionServiceImpl implements PositionService {
     @Autowired
     private DeviceService deviceService;
     @Autowired
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     private PositionMapper positionMapper;
     @Autowired
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     private PositionIndexMapper positionIndexMapper;
     @Autowired
     private LastPositionCache lastPositionCache;

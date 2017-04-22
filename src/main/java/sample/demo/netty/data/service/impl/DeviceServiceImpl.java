@@ -8,7 +8,6 @@ import sample.demo.netty.data.domain.Device;
 import sample.demo.netty.data.service.DeviceService;
 import sample.demo.netty.data.service.exception.DeviceNotFoundException;
 import sample.demo.netty.data.service.impl.cache.DeviceCache;
-import sample.demo.netty.data.service.impl.cache.LastPositionCache;
 import sample.demo.netty.data.service.impl.mybtatis.mapper.DeviceMapper;
 import sample.demo.netty.data.service.impl.mybtatis.mapper.ModelMapper;
 
@@ -18,13 +17,13 @@ import java.util.Set;
 public class DeviceServiceImpl implements DeviceService {
 
     @Autowired
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     private DeviceMapper deviceMapper;
     @Autowired
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     private ModelMapper modelMapper;
     @Autowired
     private DeviceCache deviceCache;
-    @Autowired
-    private LastPositionCache lastPositionCache;
 
     @Override
     public Device getDeviceById(long id) {
