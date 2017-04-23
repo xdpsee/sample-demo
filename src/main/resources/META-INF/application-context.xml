@@ -16,6 +16,7 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="locations">
             <list>
+                <value>classpath:/conf/antx.dev.properties</value>
                 <value>classpath:/conf/positions.table.properties</value>
                 <value>classpath:/conf/position.indices.table.properties</value>
             </list>
