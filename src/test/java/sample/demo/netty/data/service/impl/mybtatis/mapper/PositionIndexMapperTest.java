@@ -20,6 +20,7 @@ import static org.junit.Assert.assertNotNull;
 @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRES_NEW)
 public class PositionIndexMapperTest extends AbstractTransactionalJUnit4SpringContextTests {
 
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private PositionIndexMapper positionIndexMapper;
 

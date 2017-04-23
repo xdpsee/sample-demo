@@ -1,6 +1,7 @@
 package sample.demo.netty.core;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 

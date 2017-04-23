@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNotNull;
 @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRES_NEW)
 public class PositionMapperTest extends AbstractTransactionalJUnit4SpringContextTests {
 
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private PositionMapper positionMapper;
 

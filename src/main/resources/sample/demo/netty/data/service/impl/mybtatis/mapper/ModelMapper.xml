@@ -6,7 +6,7 @@
         <property name="timeToIdleSeconds" value="3600"/><!--1 hour-->
         <property name="timeToLiveSeconds" value="3600"/><!--1 hour-->
         <property name="maxEntriesLocalHeap" value="1000"/>
-        <property name="maxEntriesLocalDisk" value="10000000"/>
+        <property name="maxEntriesLocalDisk" value="100000"/>
         <property name="memoryStoreEvictionPolicy" value="LRU"/>
     </cache>
 

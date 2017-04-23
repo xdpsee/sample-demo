@@ -2,8 +2,8 @@ package sample.demo.netty.data.service.impl.mybtatis.mapper;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -16,18 +16,19 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:application-context.xml")
 @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRES_NEW)
 public class ModelMapperTest extends AbstractTransactionalJUnit4SpringContextTests {
 
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private ModelMapper modelMapper;
 
-    @Test
+    @Test(expected = MyBatisSystemException.class)
     public void testInsert() {
 
         Model model = new Model();
@@ -38,7 +39,6 @@ public class ModelMapperTest extends AbstractTransactionalJUnit4SpringContextTes
         model.setSupportedCommands(Arrays.asList(CommandType.TYPE_ALARM_CLOCK));
 
         modelMapper.insert(model);
-
         modelMapper.insert(model);
 
     }
@@ -59,7 +59,7 @@ public class ModelMapperTest extends AbstractTransactionalJUnit4SpringContextTes
         assertNotNull(model);
 
         List<Model> models = modelMapper.selectAll("mobile");
-        assertEquals(1, models.size());
+        assertTrue(models.size() >= 1);
 
     }
 
