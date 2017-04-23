@@ -6,30 +6,6 @@
 	   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 	   http://www.dangdang.com/schema/ddframe/rdb
 	   http://www.dangdang.com/schema/ddframe/rdb/rdb.xsd">
-    <!--数据源0-->
-    <bean name="ds_0" parent="defaultDataSource">
-        <property name="jdbcUrl" value="${datasource.url.0}"/>
-        <property name="username" value="${datasource.user.0}"/>
-        <property name="password" value="${datasource.password.0}"/>
-    </bean>
-    <!--数据源1-->
-    <bean name="ds_1" parent="defaultDataSource">
-        <property name="jdbcUrl" value="${datasource.url.1}"/>
-        <property name="username" value="${datasource.user.1}"/>
-        <property name="password" value="${datasource.password.1}"/>
-    </bean>
-    <!--数据源2-->
-    <bean name="ds_2" parent="defaultDataSource">
-        <property name="jdbcUrl" value="${datasource.url.2}"/>
-        <property name="username" value="${datasource.user.2}"/>
-        <property name="password" value="${datasource.password.2}"/>
-    </bean>
-    <!--数据源3-->
-    <bean name="ds_3" parent="defaultDataSource">
-        <property name="jdbcUrl" value="${datasource.url.3}"/>
-        <property name="username" value="${datasource.user.3}"/>
-        <property name="password" value="${datasource.password.3}"/>
-    </bean>
     <!-- Sharding 数据源 -->
     <rdb:data-source id="dataSource">
         <rdb:sharding-rule data-sources="defaultDataSource,ds_0,ds_1,ds_2,ds_3"

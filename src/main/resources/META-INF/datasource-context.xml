@@ -30,10 +30,38 @@
         </property>
     </bean>
 
+    <!--数据源0-->
+    <bean name="ds_0" parent="defaultDataSource">
+        <property name="jdbcUrl" value="${datasource0.url}"/>
+        <property name="username" value="${datasource0.user}"/>
+        <property name="password" value="${datasource0.password}"/>
+    </bean>
+
+    <!--数据源1-->
+    <bean name="ds_1" parent="defaultDataSource">
+        <property name="jdbcUrl" value="${datasource1.url}"/>
+        <property name="username" value="${datasource1.user}"/>
+        <property name="password" value="${datasource1.password}"/>
+    </bean>
+
+    <!--数据源2-->
+    <bean name="ds_2" parent="defaultDataSource">
+        <property name="jdbcUrl" value="${datasource2.url}"/>
+        <property name="username" value="${datasource2.user}"/>
+        <property name="password" value="${datasource2.password}"/>
+    </bean>
+
+    <!--数据源3-->
+    <bean name="ds_3" parent="defaultDataSource">
+        <property name="jdbcUrl" value="${datasource3.url}"/>
+        <property name="username" value="${datasource3.user}"/>
+        <property name="password" value="${datasource3.password}"/>
+    </bean>
+
     <bean id="sqlSessionFactory" name="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:/sample/demo/netty/data/service/impl/mybtatis/mybatis-config.xml"/>
-        <property name="mapperLocations" value="classpath:/sample/demo/netty/data/service/impl/mybtatis/mapper/*.xml"/>
+        <property name="mapperLocations" value="classpath:/sample/demo/netty/data/service/impl/mybtatis/mapper/ModelMapper.xml"/>
     </bean>
 
     <bean id="sqlSessionTemplate" name="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">

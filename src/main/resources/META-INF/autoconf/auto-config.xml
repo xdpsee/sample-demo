@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <group name="sample/demo/netty">
+        <property name="datasource.url"/>
+        <property name="datasource.user"/>
+        <property name="datasource.password"/>
+        <property name="datasource.url.0"/>
+        <property name="datasource.user.0"/>
+        <property name="datasource.password.0"/>
+        <property name="datasource.url.1"/>
+        <property name="datasource.user.1"/>
+        <property name="datasource.password.1"/>
+        <property name="datasource.url.2"/>
+        <property name="datasource.user.2"/>
+        <property name="datasource.password.2"/>
+        <property name="datasource.url.3"/>
+        <property name="datasource.user.3"/>
+        <property name="datasource.password.3"/>
+        <property name="redis.host"/>
+        <property name="redis.port"/>
+        <property name="redis.password"/>
+    </group>
+    <script>
+        <generate template="META-INF/redis-context.xml"/>
+        <generate template="META-INF/datasource-context.xml"/>
+    </script>
+
+</config>
+

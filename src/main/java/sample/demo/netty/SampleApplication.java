@@ -14,7 +14,7 @@ public class SampleApplication {
         Configs.load();
 
         final AbstractApplicationContext context
-                = new ClassPathXmlApplicationContext("application-context.xml");
+                = new ClassPathXmlApplicationContext("META-INF/application-context.xml");
 
         System.out.println("--------------------------------------->");
         System.out.println(new Date(context.getStartupDate()));

@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:application-context.xml")
+@ContextConfiguration(locations = "classpath:META-INF/application-context.xml")
 @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRES_NEW)
 public class ModelMapperTest extends AbstractTransactionalJUnit4SpringContextTests {
 

@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:application-context.xml")
+@ContextConfiguration(locations = "classpath:META-INF/application-context.xml")
 @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRES_NEW)
 public class PositionMapperTest extends AbstractTransactionalJUnit4SpringContextTests {
 
